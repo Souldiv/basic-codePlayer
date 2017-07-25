@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+      <title>codeplayer </title>
+      <link href="jquery-ui/jquery-ui.css" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet">
+      <script src="jquerymin.js"></script>
+      <script src="jquery-ui/jquery-ui.js"></script>
+      <style type="text/css">
+            body{
+              margin:0;
+              padding:0;
+              font-family: 'Poppins','sans-serif';
+              overflow-x: hidden;
+            }
+            #top-bar{
+            width:100%;
+            height:50px;
+            background-color: #E7E8E1;
+            border: 0.5px #E7E8E1 solid;
+            overflow: hidden;
+          }
+          h2{
+            position:relative;
+            top:-12.5px;
+            left:20px;
+            float:left;
+          }
+          .btn-group{
+            position:relative;
+            left:420px;
+            top:5px;
+            float:left;
+          }
+          .btn-group button {
+                background-color: #000000; /* Black background */
+                border: 1px solid #E7E8E1 ; /* Gray border */
+                color: white; /* White text */
+                padding: 7px 20px; /* Some padding */
+                cursor: pointer; /* Pointer/hand icon */
+                float: left; /* Float the buttons side by side */
+                font-family: 'Poppins','sans-serif';
+                }
+          .btn-group button:hover {
+                background-color: gray;
+              }
+          .btn-group button:not(:last-child) {
+            border-right: none; /* Prevent double borders */
+              }
+              #wrapper{
+
+                height:100%;
+                width:100%;
+              }
+              .clear{
+                clear: both;
+              }
+              .panel{
+                float:left;
+                border-right: 1px gray solid;
+                }
+                textarea{
+                  resize: none;
+                }
+                #html{
+
+                }
+                .hidden{
+                  display:none;
+                }
+              .active{
+                background-color: white !important;
+                color:black !important;
+              }
+              iframe{
+                border:none;
+                border-top: 1px gray solid;
+                border-bottom:1px gray solid;
+              }
+      </style>
+</head>
+<body>
+<div id="top-bar">
+      <h2>Code-player</h2>
+
+        <div class="btn-group">
+
+            <button class="active"id="html">html</button>
+
+            <button id="css">css</button>
+
+            <button id="javascript">javascript</button>
+
+            <button class="active" id="output">output</button>
+
+          </div>
+
+</div>
+<div class="clear"></div>
+<div id="wrapper">
+  <textarea  class="panel"id="htmlPanel"rows = "1"cols = "80" placeholder="html"></textarea>
+  <textarea class="panel hidden"id = "cssPanel"rows = "1"cols = "80"placeholder="css"></textarea>
+  <textarea class="panel hidden"id = "javascriptPanel"rows = "1"cols = "80"placeholder="js"></textarea>
+  <iframe class="panel" id="outputPanel"></iframe>
+</div>
+<script type="text/javascript">
+$("button").click(function(){
+  $(this).toggleClass("active");
+  var count=$(".active").length;
+  var panel=$(this).attr("id");
+  $("#"+panel+"Panel").toggle();
+  $(".panel").width(($(window).width()/count)-10);
+
+});
+$(".panel").height($(window).height() - $("#top-bar").height()-10);
+$(".panel").width(($(window).width()/2)-20);
+$("textarea").on('change keyup paste', function() {
+$("#outputPanel").contents().find("html").html("<html><head><style type='text/css'>"+$("#cssPanel").val()+"</style> </head><body>"+$("#htmlPanel").val()+"</body></html>");
+document.getElementById("outputPanel").contentWindow.eval($("#javascriptPanel").val());
+});
+
+</script>
+</body>
+</html>
